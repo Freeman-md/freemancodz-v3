@@ -1,5 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 
+type RequestPayload = { source?: { content?: unknown } }
+
 const jsonHeaders = { "Content-Type": "application/json" }
 
 function jsonResponse(body: unknown, status = 200) {
@@ -18,9 +20,8 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: "Request body must be valid JSON" }, 400)
   }
 
-  const content = typeof (payload as { source?: { content?: unknown } })?.source?.content === "string"
-    ? (payload as { source?: { content?: string } }).source?.content?.trim()
-    : ""
+  const body = payload as RequestPayload
+  const content = typeof body?.source?.content === "string" ? body.source.content.trim() : ""
 
   if (!content) {
     return jsonResponse(
