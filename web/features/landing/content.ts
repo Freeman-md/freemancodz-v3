@@ -8,7 +8,6 @@ import {
 import type {
   CapabilityCard,
   ContactLink,
-  SelectedWork,
 } from "@/features/landing/types"
 
 export const heroContent = {
@@ -63,29 +62,6 @@ export const capabilityCards: CapabilityCard[] = [
     description:
       "Implementing APIs, processing services, and distributed components that keep operating when the happy path disappears.",
     icon: Server,
-  },
-]
-
-export const selectedWorks: SelectedWork[] = [
-  {
-    title: "Contract Clause Extractor",
-    description:
-      "End-to-end NLP workflow for extracting payment terms and limitation of liability clauses from contract documents into a structured review pipeline.",
-    tags: ["Python", "OpenAI API", "Pandas"],
-    variant: "wide",
-    eyebrow: "Automation system",
-    actionLabel: "Inspect repository",
-    href: "https://github.com/Freeman-md/cst4012-contract-extraction",
-  },
-  {
-    title: "Internal Ops Automation",
-    description:
-      "Operational automation surface for routing internal work, standardizing flows, and removing repetitive coordination overhead.",
-    tags: ["TypeScript", "Automation"],
-    variant: "stacked",
-    eyebrow: "Workflow platform",
-    actionLabel: "Open project log",
-    href: "https://github.com/Freeman-md/internal-ops-automation",
   },
 ]
 

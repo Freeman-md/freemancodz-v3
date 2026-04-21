@@ -6,14 +6,39 @@ export type CapabilityCard = {
   icon: LucideIcon
 }
 
-export type SelectedWork = {
+export type ProjectEntryFeaturedRow = {
+  id: string
+  slug: string
+  title: string
+  description: string
+  type: "project" | "case_study" | "experiment" | "system"
+  domain:
+    | "ai"
+    | "blockchain"
+    | "backend"
+    | "automation"
+    | "frontend"
+    | "full_stack"
+    | "tooling"
+    | "other"
+  tech_stack: string[]
+}
+
+export type FeaturedWorkPanel = {
+  id: string
+  slug: string
+  href: string
+  eyebrow: string
+  actionLabel: string
   title: string
   description: string
   tags: string[]
   variant: "wide" | "stacked"
-  eyebrow: string
-  actionLabel: string
-  href: string
+}
+
+export type FeaturedWorksState = {
+  works: FeaturedWorkPanel[]
+  errorMessage: string | null
 }
 
 export type ContactLink = {

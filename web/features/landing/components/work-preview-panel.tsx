@@ -1,22 +1,23 @@
+import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
-import type { SelectedWork } from "@/features/landing/types"
+import type { FeaturedWorkPanel } from "@/features/landing/types"
 
 export function WorkPreviewPanel({
-  selectedWork,
+  featuredWork,
 }: {
-  selectedWork: SelectedWork
+  featuredWork: FeaturedWorkPanel
 }) {
-  if (selectedWork.variant === "stacked") {
+  if (featuredWork.variant === "stacked") {
     return (
       <article className="flex min-h-[18rem] flex-col justify-between bg-[linear-gradient(180deg,#272042_0%,#1a1a2a_100%)] p-8">
         <div className="space-y-5">
           <div className="space-y-3">
             <p className="text-[0.64rem] font-medium tracking-[0.16em] text-white/58 uppercase">
-              {selectedWork.eyebrow}
+              {featuredWork.eyebrow}
             </p>
             <div className="flex flex-wrap gap-2">
-              {selectedWork.tags.map((tagLabel) => (
+              {featuredWork.tags.map((tagLabel) => (
                 <span
                   key={tagLabel}
                   className="bg-black/18 px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-white/82 uppercase"
@@ -29,23 +30,21 @@ export function WorkPreviewPanel({
 
           <div className="space-y-3">
             <h3 className="text-3xl font-bold tracking-[-0.05em] text-white">
-              {selectedWork.title}
+              {featuredWork.title}
             </h3>
             <p className="max-w-[18rem] text-sm leading-7 text-white/68">
-              {selectedWork.description}
+              {featuredWork.description}
             </p>
           </div>
         </div>
 
-        <a
-          href={selectedWork.href}
-          target="_blank"
-          rel="noreferrer"
+        <Link
+          href={featuredWork.href}
           className="inline-flex items-center gap-2 text-[0.68rem] font-medium tracking-[0.16em] text-white uppercase"
         >
-          {selectedWork.actionLabel}
+          {featuredWork.actionLabel}
           <ArrowRight className="size-3.5" strokeWidth={1.5} />
-        </a>
+        </Link>
       </article>
     )
   }
@@ -63,10 +62,10 @@ export function WorkPreviewPanel({
         <div className="space-y-5">
           <div className="space-y-3">
             <p className="text-[0.64rem] font-medium tracking-[0.16em] text-white/58 uppercase">
-              {selectedWork.eyebrow}
+              {featuredWork.eyebrow}
             </p>
             <div className="flex flex-wrap gap-2">
-              {selectedWork.tags.map((tagLabel) => (
+              {featuredWork.tags.map((tagLabel) => (
                 <span
                   key={tagLabel}
                   className="bg-[var(--color-surface-container-highest)] px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-white/78 uppercase"
@@ -79,23 +78,21 @@ export function WorkPreviewPanel({
 
           <div className="space-y-3">
             <h3 className="text-3xl font-bold tracking-[-0.05em] text-white">
-              {selectedWork.title}
+              {featuredWork.title}
             </h3>
             <p className="max-w-[22rem] text-sm leading-7 text-white/68">
-              {selectedWork.description}
+              {featuredWork.description}
             </p>
           </div>
         </div>
 
-        <a
-          href={selectedWork.href}
-          target="_blank"
-          rel="noreferrer"
+        <Link
+          href={featuredWork.href}
           className="inline-flex items-center gap-2 text-[0.68rem] font-medium tracking-[0.16em] text-white uppercase"
         >
-          {selectedWork.actionLabel}
+          {featuredWork.actionLabel}
           <ArrowRight className="size-3.5" strokeWidth={1.5} />
-        </a>
+        </Link>
       </div>
     </article>
   )
