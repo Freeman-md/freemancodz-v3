@@ -1,9 +1,34 @@
-import {
-  implementationSection,
-  projectMetrics,
-} from "@/features/project-details/content"
+import { projectDetailsRecord } from "@/features/project-details/content"
+
+function splitTextIntoParagraphs(text: string | null): string[] {
+  if (!text) {
+    return []
+  }
+
+  return text
+    .split("\n\n")
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+}
 
 export function ProjectDetailsImplementationSection() {
+  const projectEntryDetails = projectDetailsRecord.details
+  const implementationParagraphs = splitTextIntoParagraphs(
+    projectEntryDetails?.implementation_text ?? null,
+  )
+  const implementationMetrics = [
+    {
+      label: "Latency profile",
+      value: projectEntryDetails?.latency_profile_title,
+      description: projectEntryDetails?.latency_profile_content,
+    },
+    {
+      label: "System focus",
+      value: projectEntryDetails?.system_focus_title,
+      description: projectEntryDetails?.system_focus_content,
+    },
+  ]
+
   return (
     <section className="border-y border-white/6 bg-[var(--color-surface-low)]">
       <div className="mx-auto grid max-w-[90rem] gap-10 px-6 py-18 sm:px-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:px-14 lg:py-22">
@@ -13,9 +38,9 @@ export function ProjectDetailsImplementationSection() {
           </p>
           <div className="max-w-[42rem] space-y-5">
             <h2 className="max-w-[12ch] text-balance text-4xl font-extrabold leading-[0.96] tracking-[-0.05em] text-white sm:text-[4rem]">
-              {implementationSection.title}
+              Implementation Details
             </h2>
-            {implementationSection.paragraphs.map((paragraph) => (
+            {implementationParagraphs.map((paragraph) => (
               <p key={paragraph} className="text-lg leading-8 text-white/68">
                 {paragraph}
               </p>
@@ -24,7 +49,7 @@ export function ProjectDetailsImplementationSection() {
         </div>
 
         <div className="grid gap-4">
-          {projectMetrics.map((projectMetric) => (
+          {implementationMetrics.map((projectMetric) => (
             <article
               key={projectMetric.label}
               className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-7"

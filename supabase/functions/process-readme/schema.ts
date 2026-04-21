@@ -14,10 +14,26 @@ const domain = z.enum([
 const status = z.enum(["draft", "published", "archived"])
 const level = z.enum(["beginner", "intermediate", "advanced"])
 
+const projectEntryDetailsSchema = z.object({
+  system_snapshot_title: z.string().nullable(),
+  system_snapshot_items: z.array(z.string()),
+  design_focus_items: z.array(z.string()),
+  context_text: z.string().nullable(),
+  innovation_text: z.string().nullable(),
+  implementation_text: z.string().nullable(),
+  latency_profile_title: z.string().nullable(),
+  latency_profile_content: z.string().nullable(),
+  system_focus_title: z.string().nullable(),
+  system_focus_content: z.string().nullable(),
+  outcomes_text: z.string().nullable(),
+  why_this_matters: z.string().nullable(),
+}).strict()
+
 const projectEntrySchema = z.object({
   slug: z.string(),
   title: z.string(),
   description: z.string(),
+  year: z.string().nullable(),
   type: entryType,
   domain: domain,
   status: status,
@@ -28,8 +44,7 @@ const projectEntrySchema = z.object({
   thumbnail_url: z.string().nullable(),
   featured: z.boolean(),
   summary: z.string().nullable(),
-  content: z.string().nullable(),
-  notes: z.string().nullable(),
+  details: projectEntryDetailsSchema.nullable(),
 }).strict()
 
 const caseStudySchema = z.object({
@@ -44,4 +59,7 @@ export const pipelineSchema = z.object({
   case_study: caseStudySchema.nullable(),
 }).strict()
 
+export type ProjectEntry = z.infer<typeof projectEntrySchema>
+export type ProjectEntryDetails = z.infer<typeof projectEntryDetailsSchema>
+export type CaseStudy = z.infer<typeof caseStudySchema>
 export type PipelineOutput = z.infer<typeof pipelineSchema>
