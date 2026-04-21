@@ -1,20 +1,30 @@
+import { z } from "npm:zod@3.23.8"
+import { zodToJsonSchema } from "npm:zod-to-json-schema@3.23.2"
+
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 const DEFAULT_MODEL = "gpt-5.4-nano"
 
-export type StructuredRequest = {
+export type StructuredRequest<T extends z.ZodTypeAny> = {
   instructions: string
   input: string
   schemaName: string
-  schema: Record<string, unknown>
+  schema: T
   model?: string
 }
 
-export async function callStructured<T>(request: StructuredRequest): Promise<T> {
+export async function callStructured<T extends z.ZodTypeAny>(
+  request: StructuredRequest<T>,
+): Promise<z.infer<T>> {
   const apiKey = Deno.env.get("OPENAI_API_KEY")
 
   if (!apiKey) {
     throw new Error("Missing required environment variable: OPENAI_API_KEY")
   }
+
+  const jsonSchema = zodToJsonSchema(request.schema, {
+    $refStrategy: "none",
+  }) as Record<string, unknown>
+  delete jsonSchema.$schema
 
   const response = await fetch(OPENAI_RESPONSES_URL, {
     method: "POST",
@@ -30,7 +40,7 @@ export async function callStructured<T>(request: StructuredRequest): Promise<T> 
         format: {
           type: "json_schema",
           name: request.schemaName,
-          schema: request.schema,
+          schema: jsonSchema,
           strict: true,
         },
       },
@@ -48,9 +58,17 @@ export async function callStructured<T>(request: StructuredRequest): Promise<T> 
     throw new Error("OpenAI response did not contain output_text")
   }
 
+  let parsed: unknown
   try {
-    return JSON.parse(data.output_text) as T
+    parsed = JSON.parse(data.output_text)
   } catch {
     throw new Error("OpenAI response was not valid JSON")
   }
+
+  const result = request.schema.safeParse(parsed)
+  if (!result.success) {
+    throw new Error(`OpenAI response did not match schema: ${result.error.message}`)
+  }
+
+  return result.data
 }

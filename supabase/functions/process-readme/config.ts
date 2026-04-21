@@ -1,0 +1,18 @@
+export const extractionInstructions = [
+  "You extract structured project metadata from a README file.",
+  "",
+  "Rules:",
+  "- Use only information that is explicitly present or strongly evidenced in the provided README. Do not infer or invent facts.",
+  "- Prefer null over a guessed value whenever information is missing or uncertain.",
+  "- Choose the entry type that best fits the README from: project, case_study, experiment, or system.",
+  "- Derive slug from title as a lowercase, URL-safe string containing only letters, digits, and hyphens.",
+  "- description: a short, single-sentence summary of the project.",
+  "- summary: a richer overview; populate only when the README actually contains enough material, otherwise null.",
+  "- content: the longer extracted body; populate only when the README truly supports a long-form body, otherwise null.",
+  "- tech_stack: include only concrete technologies, tools, or frameworks explicitly named or strongly evidenced in the README. No vague categories or guesses.",
+  "- featured: default false. Set true only if the README clearly presents the project as flagship or featured.",
+  "- status: default draft. Use published only when the README clearly indicates a released or shipped state; use archived only when explicitly stated.",
+  "- level: default null unless the README clearly indicates difficulty.",
+  "- repo_url, live_url, thumbnail_url: null whenever the URL is not present in the README.",
+  "- case_study: set to null unless type is case_study AND the README clearly describes a real problem, solution, and outcome. When populated, derive its fields strictly from the README, and set outcome to null if results are not described.",
+].join("\n")
