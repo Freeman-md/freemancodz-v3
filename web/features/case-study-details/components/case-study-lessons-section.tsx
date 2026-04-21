@@ -1,4 +1,4 @@
-import { caseStudyRecord } from "@/features/case-study-details/content"
+import type { CaseStudyDetailsView } from "@/features/case-study-details/types"
 
 function NarrativeBlock({
   sectionTitle,
@@ -13,27 +13,36 @@ function NarrativeBlock({
         {sectionTitle}
       </h2>
       <div className="mt-5 space-y-4">
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph} className="text-base leading-8 text-white/66">
-            {paragraph}
+        {paragraphs.length > 0 ? (
+          paragraphs.map((paragraph, index) => (
+            <p key={`${index}-${paragraph}`} className="text-base leading-8 text-white/66">
+              {paragraph}
+            </p>
+          ))
+        ) : (
+          <p className="text-base leading-8 text-white/48">
+            This section has not been published yet.
           </p>
-        ))}
+        )}
       </div>
     </article>
   )
 }
 
-export function CaseStudyLessonsSection() {
-  const reinforcementParagraphs = splitTextIntoParagraphs(
-    caseStudyRecord.reinforcement_text,
-  )
-  const nextStepsParagraphs = splitTextIntoParagraphs(caseStudyRecord.next_steps)
+export function CaseStudyLessonsSection({
+  reinforcementParagraphs,
+  nextStepsParagraphs,
+}: {
+  reinforcementParagraphs: CaseStudyDetailsView["reinforcementParagraphs"]
+  nextStepsParagraphs: CaseStudyDetailsView["nextStepsParagraphs"]
+}) {
+  const reinforcementSectionTitle = "What this case study reinforced"
 
   return (
     <section className="mx-auto max-w-[90rem] px-6 pb-20 sm:px-10 lg:px-14 lg:pb-24">
       <div className="grid gap-6 lg:grid-cols-2">
         <NarrativeBlock
-          sectionTitle="What this case study reinforced"
+          sectionTitle={reinforcementSectionTitle}
           paragraphs={reinforcementParagraphs}
         />
         <NarrativeBlock
@@ -43,15 +52,4 @@ export function CaseStudyLessonsSection() {
       </div>
     </section>
   )
-}
-
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
 }

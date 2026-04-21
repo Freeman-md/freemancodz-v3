@@ -1,9 +1,11 @@
-import { caseStudyRecord } from "@/features/case-study-details/content"
+import type { CaseStudyDetailsView } from "@/features/case-study-details/types"
 
-export function CaseStudyImplementationSection() {
-  const implementationParagraphs = splitTextIntoParagraphs(
-    caseStudyRecord.implementation_details,
-  )
+export function CaseStudyImplementationSection({
+  implementationParagraphs,
+}: {
+  implementationParagraphs: CaseStudyDetailsView["implementationParagraphs"]
+}) {
+  const hasImplementationDetails = implementationParagraphs.length > 0
 
   return (
     <section className="mx-auto max-w-[90rem] px-6 py-18 sm:px-10 lg:px-14 lg:py-22">
@@ -21,25 +23,20 @@ export function CaseStudyImplementationSection() {
 
         <div className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-8">
           <div className="space-y-5">
-            {implementationParagraphs.map((paragraph) => (
-              <p key={paragraph} className="text-lg leading-8 text-white/68">
-                {paragraph}
+            {hasImplementationDetails ? (
+              implementationParagraphs.map((paragraph, index) => (
+                <p key={`${index}-${paragraph}`} className="text-lg leading-8 text-white/68">
+                  {paragraph}
+                </p>
+              ))
+            ) : (
+              <p className="text-lg leading-8 text-white/48">
+                No implementation details have been added yet.
               </p>
-            ))}
+            )}
           </div>
         </div>
       </div>
     </section>
   )
-}
-
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
 }

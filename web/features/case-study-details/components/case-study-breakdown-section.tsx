@@ -1,5 +1,3 @@
-import { caseStudyRecord } from "@/features/case-study-details/content"
-
 function SectionKicker({ label }: { label: string }) {
   return (
     <p className="text-[0.64rem] font-medium tracking-[0.18em] text-[var(--color-primary)] uppercase">
@@ -8,15 +6,31 @@ function SectionKicker({ label }: { label: string }) {
   )
 }
 
-export function CaseStudyBreakdownSection() {
+export function CaseStudyBreakdownSection({
+  domainLabel,
+  typeLabel,
+  levelLabel,
+  statusLabel,
+  contextParagraphs,
+  approachParagraphs,
+  techStack,
+  evidenceItems,
+}: {
+  domainLabel: string
+  typeLabel: string
+  levelLabel: string
+  statusLabel: string
+  contextParagraphs: string[]
+  approachParagraphs: string[]
+  techStack: string[]
+  evidenceItems: string[]
+}) {
   const metadataItems = [
-    { label: "Domain", value: formatDisplayLabel(caseStudyRecord.domain) },
-    { label: "Type", value: "Case Study" },
-    { label: "Level", value: formatDisplayLabel(caseStudyRecord.level) },
-    { label: "Status", value: formatDisplayLabel(caseStudyRecord.status) },
+    { label: "Domain", value: domainLabel },
+    { label: "Type", value: typeLabel },
+    { label: "Level", value: levelLabel },
+    { label: "Status", value: statusLabel },
   ]
-  const contextParagraphs = splitTextIntoParagraphs(caseStudyRecord.context_body)
-  const approachParagraphs = splitTextIntoParagraphs(caseStudyRecord.approach_body)
 
   return (
     <section className="border-y border-white/6 bg-[var(--color-surface-low)]">
@@ -28,11 +42,17 @@ export function CaseStudyBreakdownSection() {
               <h2 className="max-w-[12ch] text-balance text-4xl font-extrabold leading-[0.96] tracking-[-0.05em] text-white sm:text-[4rem]">
                 Why this problem mattered
               </h2>
-              {contextParagraphs.map((paragraph) => (
-                <p key={paragraph} className="text-lg leading-8 text-white/68">
-                  {paragraph}
+              {contextParagraphs.length > 0 ? (
+                contextParagraphs.map((paragraph, index) => (
+                  <p key={`${index}-${paragraph}`} className="text-lg leading-8 text-white/68">
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="text-lg leading-8 text-white/48">
+                  This case study does not include context details yet.
                 </p>
-              ))}
+              )}
             </div>
           </div>
 
@@ -42,11 +62,17 @@ export function CaseStudyBreakdownSection() {
               <h2 className="max-w-[12ch] text-balance text-4xl font-extrabold leading-[0.96] tracking-[-0.05em] text-white sm:text-[4rem]">
                 How the system was structured
               </h2>
-              {approachParagraphs.map((paragraph) => (
-                <p key={paragraph} className="text-lg leading-8 text-white/68">
-                  {paragraph}
+              {approachParagraphs.length > 0 ? (
+                approachParagraphs.map((paragraph, index) => (
+                  <p key={`${index}-${paragraph}`} className="text-lg leading-8 text-white/68">
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="text-lg leading-8 text-white/48">
+                  This case study does not include approach details yet.
                 </p>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -54,7 +80,7 @@ export function CaseStudyBreakdownSection() {
         <div className="space-y-6">
           <div className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-7">
             <p className="text-[0.62rem] font-medium tracking-[0.18em] text-white/44 uppercase">
-              Case study details
+              Case Study Details
             </p>
             <dl className="mt-6 space-y-5">
               {metadataItems.map((metadataItem) => (
@@ -73,17 +99,23 @@ export function CaseStudyBreakdownSection() {
 
           <div className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-7">
             <p className="text-[0.62rem] font-medium tracking-[0.18em] text-white/44 uppercase">
-              Technology stack
+              Technology Stack
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {caseStudyRecord.tech_stack.map((technologyLabel) => (
-                <span
-                  key={technologyLabel}
-                  className="bg-[var(--color-surface-container-highest)] px-3 py-2 text-[0.62rem] font-medium tracking-[0.16em] text-white/78 uppercase"
-                >
-                  {technologyLabel}
+              {techStack.length > 0 ? (
+                techStack.map((technologyLabel) => (
+                  <span
+                    key={technologyLabel}
+                    className="bg-[var(--color-surface-container-highest)] px-3 py-2 text-[0.62rem] font-medium tracking-[0.16em] text-white/78 uppercase"
+                  >
+                    {technologyLabel}
+                  </span>
+                ))
+              ) : (
+                <span className="text-sm text-white/48">
+                  No technology stack listed yet.
                 </span>
-              ))}
+              )}
             </div>
           </div>
 
@@ -91,38 +123,25 @@ export function CaseStudyBreakdownSection() {
             <p className="text-[0.62rem] font-medium tracking-[0.18em] text-[var(--color-primary)] uppercase">
               Evidence
             </p>
-            <ul className="mt-5 space-y-4 text-sm leading-7 text-white/72">
-              {caseStudyRecord.evidence_items.map((evidenceItem) => (
-                <li key={evidenceItem} className="border-t border-white/8 pt-4 first:border-t-0 first:pt-0">
-                  {evidenceItem}
-                </li>
-              ))}
-            </ul>
+            {evidenceItems.length > 0 ? (
+              <ul className="mt-5 space-y-4 text-sm leading-7 text-white/72">
+                {evidenceItems.map((evidenceItem, index) => (
+                  <li
+                    key={`${index}-${evidenceItem}`}
+                    className="border-t border-white/8 pt-4 first:border-t-0 first:pt-0"
+                  >
+                    {evidenceItem}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-5 text-sm leading-7 text-white/48">
+                No evidence items have been added yet.
+              </p>
+            )}
           </div>
         </div>
       </div>
     </section>
   )
-}
-
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-}
-
-function formatDisplayLabel(value: string | null): string {
-  if (!value) {
-    return "Unavailable"
-  }
-
-  return value
-    .split("_")
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ")
 }

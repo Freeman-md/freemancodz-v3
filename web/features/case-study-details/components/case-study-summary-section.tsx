@@ -1,21 +1,39 @@
-import { caseStudyRecord } from "@/features/case-study-details/content"
+type SummaryCard = {
+  label: "Problem" | "Solution" | "Outcome"
+  title: string | null
+  description: string | null
+}
 
-export function CaseStudySummarySection() {
-  const summaryCards = [
+export function CaseStudySummarySection({
+  problemTitle,
+  problemDescription,
+  solutionTitle,
+  solutionDescription,
+  outcomeTitle,
+  outcomeDescription,
+}: {
+  problemTitle: string | null
+  problemDescription: string | null
+  solutionTitle: string | null
+  solutionDescription: string | null
+  outcomeTitle: string | null
+  outcomeDescription: string | null
+}) {
+  const summaryCards: SummaryCard[] = [
     {
       label: "Problem",
-      title: caseStudyRecord.problem_title,
-      description: caseStudyRecord.problem_description,
+      title: problemTitle,
+      description: problemDescription,
     },
     {
       label: "Solution",
-      title: caseStudyRecord.solution_title,
-      description: caseStudyRecord.solution_description,
+      title: solutionTitle,
+      description: solutionDescription,
     },
     {
       label: "Outcome",
-      title: caseStudyRecord.outcome_title,
-      description: caseStudyRecord.outcome_description,
+      title: outcomeTitle,
+      description: outcomeDescription,
     },
   ]
 
@@ -31,13 +49,12 @@ export function CaseStudySummarySection() {
               {summaryCard.label}
             </p>
             <h2 className="mt-4 max-w-[12ch] text-balance text-3xl font-extrabold leading-tight tracking-[-0.05em] text-white">
-              {summaryCard.title}
+              {summaryCard.title ?? `${summaryCard.label} details unavailable`}
             </h2>
-            {summaryCard.description ? (
-              <p className="mt-4 text-base leading-8 text-white/66">
-                {summaryCard.description}
-              </p>
-            ) : null}
+            <p className="mt-4 text-base leading-8 text-white/66">
+              {summaryCard.description ??
+                "This section has not been published yet."}
+            </p>
           </article>
         ))}
       </div>
