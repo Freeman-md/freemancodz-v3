@@ -33,6 +33,8 @@ export const archiveProjects: ArchiveProjectCard[] = [
     level: "Prototype",
     tags: ["Python", "OpenAI", "Pandas"],
     variant: "half",
+    href: "/case-studies/contract-clause-extractor",
+    actionLabel: "Open case study",
   },
   {
     id: "002",
@@ -69,6 +71,8 @@ export const archiveProjects: ArchiveProjectCard[] = [
     level: "Active",
     tags: ["TypeScript", "Automation", "Ops"],
     variant: "half",
+    href: "/projects/distributed-identity-gateway-protocol",
+    actionLabel: "Open project details",
   },
   {
     id: "005",

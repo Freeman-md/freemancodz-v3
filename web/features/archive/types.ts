@@ -13,4 +13,6 @@ export type ArchiveProjectCard = {
   level: string
   tags: string[]
   variant: "half" | "full"
+  href?: string
+  actionLabel?: string
 }

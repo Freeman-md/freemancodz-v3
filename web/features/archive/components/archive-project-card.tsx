@@ -62,6 +62,18 @@ export function ArchiveProjectCard({
             </span>
           ))}
         </div>
+
+        {projectCard.href && projectCard.actionLabel ? (
+          <div className="mt-8 flex">
+            <a
+              href={projectCard.href}
+              className="inline-flex items-center gap-3 text-[0.68rem] font-medium tracking-[0.18em] text-white/68 uppercase transition-colors duration-200 hover:text-white"
+            >
+              <span>{projectCard.actionLabel}</span>
+              <span className="h-px w-10 bg-[var(--color-primary)]" />
+            </a>
+          </div>
+        ) : null}
       </div>
     </article>
   )
