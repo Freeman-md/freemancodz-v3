@@ -1,7 +1,4 @@
-import {
-  caseStudyLessonsSection,
-  caseStudyNextStepsSection,
-} from "@/features/case-study-details/content"
+import { caseStudyRecord } from "@/features/case-study-details/content"
 
 function NarrativeBlock({
   sectionTitle,
@@ -27,18 +24,34 @@ function NarrativeBlock({
 }
 
 export function CaseStudyLessonsSection() {
+  const reinforcementParagraphs = splitTextIntoParagraphs(
+    caseStudyRecord.reinforcement_text,
+  )
+  const nextStepsParagraphs = splitTextIntoParagraphs(caseStudyRecord.next_steps)
+
   return (
     <section className="mx-auto max-w-[90rem] px-6 pb-20 sm:px-10 lg:px-14 lg:pb-24">
       <div className="grid gap-6 lg:grid-cols-2">
         <NarrativeBlock
-          sectionTitle={caseStudyLessonsSection.title}
-          paragraphs={caseStudyLessonsSection.paragraphs}
+          sectionTitle="What this case study reinforced"
+          paragraphs={reinforcementParagraphs}
         />
         <NarrativeBlock
-          sectionTitle={caseStudyNextStepsSection.title}
-          paragraphs={caseStudyNextStepsSection.paragraphs}
+          sectionTitle="Next steps"
+          paragraphs={nextStepsParagraphs}
         />
       </div>
     </section>
   )
+}
+
+function splitTextIntoParagraphs(text: string | null): string[] {
+  if (!text) {
+    return []
+  }
+
+  return text
+    .split("\n\n")
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
 }

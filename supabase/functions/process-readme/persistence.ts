@@ -376,10 +376,18 @@ function createCaseStudyWritePayload(
 ): CaseStudyWritePayload {
   return {
     project_entry_id: projectEntryId,
-    problem: extractedCaseStudy.problem,
-    solution: extractedCaseStudy.solution,
-    outcome: extractedCaseStudy.outcome,
-    content: extractedCaseStudy.content,
+    problem_title: extractedCaseStudy.problem_title,
+    problem_description: extractedCaseStudy.problem_description,
+    solution_title: extractedCaseStudy.solution_title,
+    solution_description: extractedCaseStudy.solution_description,
+    outcome_title: extractedCaseStudy.outcome_title,
+    outcome_description: extractedCaseStudy.outcome_description,
+    context_body: extractedCaseStudy.context_body,
+    approach_body: extractedCaseStudy.approach_body,
+    evidence_items: extractedCaseStudy.evidence_items,
+    implementation_details: extractedCaseStudy.implementation_details,
+    reinforcement_text: extractedCaseStudy.reinforcement_text,
+    next_steps: extractedCaseStudy.next_steps,
     updated_at: createTimestamp(),
   }
 }

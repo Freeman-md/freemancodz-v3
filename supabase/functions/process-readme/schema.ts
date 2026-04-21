@@ -48,10 +48,18 @@ const projectEntrySchema = z.object({
 }).strict()
 
 const caseStudySchema = z.object({
-  problem: z.string(),
-  solution: z.string(),
-  outcome: z.string().nullable(),
-  content: z.string().nullable(),
+  problem_title: z.string(),
+  problem_description: z.string(),
+  solution_title: z.string(),
+  solution_description: z.string(),
+  outcome_title: z.string().nullable(),
+  outcome_description: z.string().nullable(),
+  context_body: z.string().nullable(),
+  approach_body: z.string().nullable(),
+  evidence_items: z.array(z.string()),
+  implementation_details: z.string().nullable(),
+  reinforcement_text: z.string().nullable(),
+  next_steps: z.string().nullable(),
 }).strict()
 
 export const pipelineSchema = z.object({
