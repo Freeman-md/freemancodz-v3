@@ -1,7 +1,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+import { createAdminClient } from "../_shared/database.ts"
 import { callStructured } from "../_shared/openai.ts"
 import { extractionInstructions } from "./config.ts"
 import { pipelineSchema, type PipelineOutput } from "./schema.ts"
+import { saveExtractedProjectData, type SavedExtractionResult } from "./persistence.ts"
 
 type RequestPayload = { source?: { content?: unknown } }
 
@@ -23,10 +25,12 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: "Request body must be valid JSON" }, 400)
   }
 
-  const body = payload as RequestPayload
-  const content = typeof body?.source?.content === "string" ? body.source.content.trim() : ""
+  const requestBody = payload as RequestPayload
+  const readmeContent = typeof requestBody?.source?.content === "string"
+    ? requestBody.source.content.trim()
+    : ""
 
-  if (!content) {
+  if (!readmeContent) {
     return jsonResponse(
       { error: "source.content is required and must be a non-empty string" },
       400,
@@ -38,7 +42,7 @@ Deno.serve(async (req) => {
   try {
     pipeline = await callStructured({
       instructions: extractionInstructions,
-      input: content,
+      input: readmeContent,
       schemaName: "project_extraction",
       schema: pipelineSchema,
     })
@@ -50,14 +54,28 @@ Deno.serve(async (req) => {
     )
   }
 
+  let database: SavedExtractionResult
+
+  try {
+    const adminClient = createAdminClient()
+    database = await saveExtractedProjectData(adminClient, pipeline)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error"
+    return jsonResponse(
+      { error: "Failed to save extracted project data", detail: message },
+      500,
+    )
+  }
+
   return jsonResponse(
     {
       status: "accepted",
       message: "README content processed successfully",
       source: {
-        content_length: content.length,
+        content_length: readmeContent.length,
       },
       pipeline,
+      database,
     },
     202,
   )
