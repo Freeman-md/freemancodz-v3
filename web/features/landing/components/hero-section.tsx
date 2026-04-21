@@ -2,14 +2,14 @@ import { heroContent } from "@/features/landing/content"
 
 export function HeroSection() {
   return (
-    <section className="mx-auto grid max-w-[90rem] gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[minmax(0,46rem)_1fr] lg:px-14 lg:py-24">
+    <section className="mx-auto grid max-w-[90rem] gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[minmax(0,78%)_minmax(0,1fr)] lg:px-14 lg:py-24">
       <div className="space-y-8">
         <p className="text-[0.64rem] font-medium tracking-[0.18em] text-white/66 uppercase">
           {heroContent.eyebrow}
         </p>
 
         <div className="max-w-[54rem] space-y-6">
-          <h1 className="max-w-[14ch] text-balance text-5xl font-extrabold leading-[0.92] tracking-[-0.06em] text-white sm:text-6xl lg:text-[5rem]">
+          <h1 className="max-w-[16ch] text-balance text-5xl font-extrabold leading-[0.92] tracking-[-0.06em] text-white sm:text-6xl lg:text-[5rem]">
             {heroContent.title.leading}{" "}
             <span className="text-[var(--color-primary)]">
               {heroContent.title.emphasisOne}
