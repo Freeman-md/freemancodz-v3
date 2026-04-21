@@ -1,25 +1,10 @@
-import { projectDetailsRecord } from "@/features/project-details/content"
-
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-}
-
-export function ProjectDetailsOutcomesSection() {
-  const projectEntryDetails = projectDetailsRecord.details
-  const outcomesParagraphs = splitTextIntoParagraphs(
-    projectEntryDetails?.outcomes_text ?? null,
-  )
-  const whyThisMattersParagraphs = splitTextIntoParagraphs(
-    projectEntryDetails?.why_this_matters ?? null,
-  )
-
+export function ProjectDetailsOutcomesSection({
+  outcomesParagraphs,
+  whyThisMattersParagraphs,
+}: {
+  outcomesParagraphs: string[]
+  whyThisMattersParagraphs: string[]
+}) {
   return (
     <section className="mx-auto max-w-[90rem] px-6 py-18 sm:px-10 lg:px-14 lg:py-24">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]">

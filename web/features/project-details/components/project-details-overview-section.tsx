@@ -1,43 +1,39 @@
-import { projectDetailsRecord } from "@/features/project-details/content"
 import { ProjectSystemVisualPanel } from "@/features/project-details/components/project-system-visual-panel"
 
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-}
-
-function formatDisplayLabel(value: string | null): string {
-  if (!value) {
-    return "Unavailable"
-  }
-
-  return value
-    .split("_")
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ")
-}
-
-export function ProjectDetailsOverviewSection() {
-  const projectEntryDetails = projectDetailsRecord.details
-  const contextParagraphs = splitTextIntoParagraphs(projectEntryDetails?.context_text ?? null)
+export function ProjectDetailsOverviewSection({
+  domainLabel,
+  typeLabel,
+  levelLabel,
+  techStack,
+  innovationText,
+  contextParagraphs,
+  systemSnapshotTitle,
+  systemSnapshotItems,
+  designFocusItems,
+}: {
+  domainLabel: string
+  typeLabel: string
+  levelLabel: string
+  techStack: string[]
+  innovationText: string | null
+  contextParagraphs: string[]
+  systemSnapshotTitle: string | null
+  systemSnapshotItems: string[]
+  designFocusItems: string[]
+}) {
   const projectParameters = [
-    { label: "Domain", value: formatDisplayLabel(projectDetailsRecord.domain) },
-    { label: "Type", value: formatDisplayLabel(projectDetailsRecord.type) },
-    {
-      label: "Complexity Level",
-      value: formatDisplayLabel(projectDetailsRecord.level),
-    },
+    { label: "Domain", value: domainLabel },
+    { label: "Type", value: typeLabel },
+    { label: "Complexity Level", value: levelLabel },
   ]
 
   return (
     <section className="mx-auto max-w-[90rem] space-y-14 px-6 pb-18 sm:px-10 lg:px-14 lg:pb-24">
-      <ProjectSystemVisualPanel />
+      <ProjectSystemVisualPanel
+        systemSnapshotTitle={systemSnapshotTitle}
+        systemSnapshotItems={systemSnapshotItems}
+        designFocusItems={designFocusItems}
+      />
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.75fr)]">
         <div className="space-y-8">
@@ -70,7 +66,9 @@ export function ProjectDetailsOverviewSection() {
                   <dt className="text-[0.6rem] font-medium tracking-[0.18em] text-white/42 uppercase">
                     {projectParameter.label}
                   </dt>
-                  <dd className="mt-2 text-sm text-white">{projectParameter.value}</dd>
+                  <dd className="mt-2 text-sm text-white">
+                    {projectParameter.value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -81,7 +79,7 @@ export function ProjectDetailsOverviewSection() {
               Technology stack
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {projectDetailsRecord.tech_stack.map((technologyLabel) => (
+              {techStack.map((technologyLabel) => (
                 <span
                   key={technologyLabel}
                   className="bg-[var(--color-surface-container-highest)] px-3 py-2 text-[0.62rem] font-medium tracking-[0.16em] text-white/78 uppercase"
@@ -97,7 +95,7 @@ export function ProjectDetailsOverviewSection() {
               Core Innovation
             </p>
             <p className="mt-4 text-base leading-8 text-white/74">
-              {projectEntryDetails?.innovation_text}
+              {innovationText}
             </p>
           </div>
         </div>

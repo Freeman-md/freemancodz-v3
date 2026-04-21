@@ -1,4 +1,30 @@
-export type ProjectEntryDetailsRecord = {
+export type ProjectEntryRow = {
+  id: string
+  slug: string
+  title: string
+  description: string
+  year: string | null
+  type: "project" | "case_study" | "experiment" | "system"
+  domain:
+    | "ai"
+    | "blockchain"
+    | "backend"
+    | "automation"
+    | "frontend"
+    | "full_stack"
+    | "tooling"
+    | "other"
+  status: "draft" | "published" | "archived"
+  level: "beginner" | "intermediate" | "advanced" | null
+  tech_stack: string[]
+  repo_url: string | null
+  live_url: string | null
+  thumbnail_url: string | null
+  featured: boolean
+  summary: string | null
+}
+
+export type ProjectEntryDetailsRow = {
   system_snapshot_title: string | null
   system_snapshot_items: string[]
   design_focus_items: string[]
@@ -13,23 +39,26 @@ export type ProjectEntryDetailsRecord = {
   why_this_matters: string | null
 }
 
-export type ProjectDetailsRecord = {
+export type ProjectDetailsView = {
   title: string
   description: string
   year: string | null
-  type: "project" | "case_study" | "experiment" | "system"
-  domain:
-    | "ai"
-    | "blockchain"
-    | "backend"
-    | "automation"
-    | "frontend"
-    | "full_stack"
-    | "tooling"
-    | "other"
-  level: "beginner" | "intermediate" | "advanced" | null
-  repo_url: string | null
-  live_url: string | null
-  tech_stack: string[]
-  details: ProjectEntryDetailsRecord | null
+  repoUrl: string | null
+  liveUrl: string | null
+  techStack: string[]
+  domainLabel: string
+  typeLabel: string
+  levelLabel: string
+  systemSnapshotTitle: string | null
+  systemSnapshotItems: string[]
+  designFocusItems: string[]
+  contextParagraphs: string[]
+  innovationText: string | null
+  implementationParagraphs: string[]
+  latencyProfileTitle: string | null
+  latencyProfileContent: string | null
+  systemFocusTitle: string | null
+  systemFocusContent: string | null
+  outcomesParagraphs: string[]
+  whyThisMattersParagraphs: string[]
 }

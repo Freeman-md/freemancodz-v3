@@ -1,33 +1,28 @@
-import { projectDetailsRecord } from "@/features/project-details/content"
-
-function splitTextIntoParagraphs(text: string | null): string[] {
-  if (!text) {
-    return []
-  }
-
-  return text
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-}
-
-export function ProjectDetailsImplementationSection() {
-  const projectEntryDetails = projectDetailsRecord.details
-  const implementationParagraphs = splitTextIntoParagraphs(
-    projectEntryDetails?.implementation_text ?? null,
-  )
+export function ProjectDetailsImplementationSection({
+  implementationParagraphs,
+  latencyProfileTitle,
+  latencyProfileContent,
+  systemFocusTitle,
+  systemFocusContent,
+}: {
+  implementationParagraphs: string[]
+  latencyProfileTitle: string | null
+  latencyProfileContent: string | null
+  systemFocusTitle: string | null
+  systemFocusContent: string | null
+}) {
   const implementationMetrics = [
     {
       label: "Latency profile",
-      value: projectEntryDetails?.latency_profile_title,
-      description: projectEntryDetails?.latency_profile_content,
+      value: latencyProfileTitle,
+      description: latencyProfileContent,
     },
     {
       label: "System focus",
-      value: projectEntryDetails?.system_focus_title,
-      description: projectEntryDetails?.system_focus_content,
+      value: systemFocusTitle,
+      description: systemFocusContent,
     },
-  ]
+  ].filter(({ value, description }) => value !== null || description !== null)
 
   return (
     <section className="border-y border-white/6 bg-[var(--color-surface-low)]">
@@ -48,24 +43,26 @@ export function ProjectDetailsImplementationSection() {
           </div>
         </div>
 
-        <div className="grid gap-4">
-          {implementationMetrics.map((projectMetric) => (
-            <article
-              key={projectMetric.label}
-              className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-7"
-            >
-              <p className="text-[0.6rem] font-medium tracking-[0.18em] text-white/42 uppercase">
-                {projectMetric.label}
-              </p>
-              <h3 className="mt-4 text-3xl font-extrabold tracking-[-0.05em] text-white">
-                {projectMetric.value}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-white/66">
-                {projectMetric.description}
-              </p>
-            </article>
-          ))}
-        </div>
+        {implementationMetrics.length > 0 ? (
+          <div className="grid gap-4">
+            {implementationMetrics.map((projectMetric) => (
+              <article
+                key={projectMetric.label}
+                className="border border-white/8 bg-[var(--color-surface-container)] p-6 sm:p-7"
+              >
+                <p className="text-[0.6rem] font-medium tracking-[0.18em] text-white/42 uppercase">
+                  {projectMetric.label}
+                </p>
+                <h3 className="mt-4 text-3xl font-extrabold tracking-[-0.05em] text-white">
+                  {projectMetric.value}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-white/66">
+                  {projectMetric.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   )
