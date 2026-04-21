@@ -22,6 +22,16 @@ export function SelectedWorksSection() {
             />
           ))}
         </div>
+
+        <div className="mt-10 flex">
+          <a
+            href="/archive"
+            className="inline-flex items-center gap-3 text-[0.72rem] font-medium tracking-[0.18em] text-white/68 uppercase transition-colors duration-200 hover:text-white"
+          >
+            <span>View Archive</span>
+            <span className="h-px w-10 bg-[var(--color-primary)]" />
+          </a>
+        </div>
       </div>
     </section>
   )

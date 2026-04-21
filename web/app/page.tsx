@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header"
 export default function HomePage() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader activeNavigationItem="about" />
       <LandingPage />
       <SiteFooter />
     </>

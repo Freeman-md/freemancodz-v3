@@ -1,10 +1,8 @@
 import Link from "next/link"
 
 const navigationItems = [
-  { label: "Projects", href: "#selected-works", isActive: true },
-  { label: "Archive", href: "/archive", isActive: false },
-  { label: "Research", href: "#technical-inventory", isActive: false },
-  { label: "About", href: "#core-protocol", isActive: false },
+  { label: "About", href: "/", key: "about" },
+  { label: "Projects", href: "/archive", key: "projects" },
 ]
 
 function NavigationLink({
@@ -29,7 +27,11 @@ function NavigationLink({
   )
 }
 
-export function SiteHeader() {
+export function SiteHeader({
+  activeNavigationItem = "about",
+}: {
+  activeNavigationItem?: "about" | "projects"
+}) {
   return (
     <header className="sticky top-0 z-30 border-b border-white/5 bg-[color-mix(in_srgb,var(--color-surface)_82%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-[90rem] items-center justify-between px-6 py-6 sm:px-10 lg:px-14">
@@ -46,7 +48,7 @@ export function SiteHeader() {
               key={navigationItem.label}
               label={navigationItem.label}
               href={navigationItem.href}
-              isActive={navigationItem.isActive}
+              isActive={navigationItem.key === activeNavigationItem}
             />
           ))}
         </nav>
