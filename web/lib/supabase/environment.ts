@@ -2,7 +2,7 @@ import "server-only"
 
 export type ServerSupabaseConfiguration = {
   url: string
-  serviceRoleKey: string
+  publishableKey: string
 }
 
 function requireEnvironmentVariable(variableName: string): string {
@@ -20,6 +20,8 @@ export function getServerSupabaseConfiguration(): ServerSupabaseConfiguration {
     url:
       process.env.NEXT_PUBLIC_SUPABASE_URL ??
       requireEnvironmentVariable("SUPABASE_URL"),
-    serviceRoleKey: requireEnvironmentVariable("SUPABASE_SERVICE_ROLE_KEY"),
+    publishableKey: requireEnvironmentVariable(
+      "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+    ),
   }
 }

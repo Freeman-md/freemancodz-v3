@@ -19,12 +19,12 @@ The frontend lives in `web/`.
 ### Required Vercel environment variables
 
 - `NEXT_PUBLIC_SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
 Notes:
 
 - `NEXT_PUBLIC_SUPABASE_URL` is safe for browser exposure.
-- `SUPABASE_SERVICE_ROLE_KEY` must remain a server-only secret in Vercel.
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is safe for frontend and server-rendered public reads.
 - The frontend CI workflow validates the app, but Vercel Git integration is the deployment mechanism.
 
 ### Frontend CI

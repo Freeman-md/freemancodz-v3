@@ -5,9 +5,9 @@ import { createClient } from "@supabase/supabase-js"
 import { getServerSupabaseConfiguration } from "@/lib/supabase/environment"
 
 export function createServerSupabaseClient() {
-  const { url, serviceRoleKey } = getServerSupabaseConfiguration()
+  const { url, publishableKey } = getServerSupabaseConfiguration()
 
-  return createClient(url, serviceRoleKey, {
+  return createClient(url, publishableKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
