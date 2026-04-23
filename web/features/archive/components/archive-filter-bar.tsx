@@ -18,11 +18,13 @@ function ArchiveFilterGroup({
   options,
   selectedValue,
   onOptionSelect,
+  optionsClassName = "flex flex-wrap gap-2",
 }: {
   label: string
   options: ArchiveFilterOption[]
   selectedValue: string
   onOptionSelect: (value: string) => void
+  optionsClassName?: string
 }) {
   return (
     <div className="space-y-4">
@@ -30,7 +32,7 @@ function ArchiveFilterGroup({
         {label}
       </p>
 
-      <div className="flex flex-wrap gap-2">
+      <div className={optionsClassName}>
         {options.map((option) => {
           const isSelected = option.value === selectedValue
 
@@ -67,8 +69,8 @@ export function ArchiveFilterBar({
 }: ArchiveFilterBarProps) {
   return (
     <section className="mx-auto max-w-[90rem] px-6 sm:px-10 lg:px-14">
-      <div className="grid gap-10 bg-[var(--color-surface-container)] px-6 py-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-8">
-        <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 bg-[var(--color-surface-container)] px-6 py-8 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <ArchiveFilterGroup
             label="Domain"
             options={domainFilterOptions}
@@ -96,6 +98,14 @@ export function ArchiveFilterBar({
             />
           </label>
         </div>
+
+        <ArchiveFilterGroup
+          label="Technology"
+          options={technologyFilterOptions}
+          selectedValue={selectedTechnology}
+          onOptionSelect={onTechnologyChange}
+          optionsClassName="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        />
       </div>
     </section>
   )
