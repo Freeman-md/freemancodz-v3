@@ -1,7 +1,4 @@
-"use client"
-
-import { useState } from "react"
-import { ChevronDown, Search } from "lucide-react"
+import { Search } from "lucide-react"
 
 import type { ArchiveFilterOption } from "@/features/archive/types"
 
@@ -72,15 +69,10 @@ export function ArchiveFilterBar({
   onTechnologyChange,
   onSearchQueryChange,
 }: ArchiveFilterBarProps) {
-  const shouldCollapseTechnologyFilters = technologyFilterOptions.length > 12
-  const [isTechnologyExpanded, setIsTechnologyExpanded] = useState(false)
-  const showTechnologyFilters =
-    !shouldCollapseTechnologyFilters || isTechnologyExpanded
-
   return (
     <section className="mx-auto max-w-[90rem] px-6 sm:px-10 lg:px-14">
-      <div className="grid gap-8 bg-[var(--color-surface-container)] px-6 py-8 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div className="grid gap-10 bg-[var(--color-surface-container)] px-6 py-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
           <ArchiveFilterGroup
             label="Domain"
             options={domainFilterOptions}
@@ -107,43 +99,6 @@ export function ArchiveFilterBar({
               className="w-full bg-transparent text-sm tracking-[0.01em] text-white placeholder:text-white/40 focus:outline-none"
             />
           </label>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-[0.64rem] font-medium tracking-[0.18em] text-white/72 uppercase">
-              Technology
-            </p>
-
-            {shouldCollapseTechnologyFilters ? (
-              <button
-                type="button"
-                onClick={() =>
-                  setIsTechnologyExpanded((currentValue) => !currentValue)
-                }
-                className="inline-flex items-center gap-2 text-[0.64rem] font-medium tracking-[0.16em] text-white/58 uppercase transition-colors duration-200 hover:text-white"
-              >
-                {isTechnologyExpanded ? "Hide filters" : "Show filters"}
-                <ChevronDown
-                  className={
-                    isTechnologyExpanded
-                      ? "size-3.5 rotate-180 transition-transform duration-200"
-                      : "size-3.5 transition-transform duration-200"
-                  }
-                  strokeWidth={1.5}
-                />
-              </button>
-            ) : null}
-          </div>
-
-          {showTechnologyFilters ? (
-            <ArchiveFilterGroup
-              label=""
-              options={technologyFilterOptions}
-              selectedValue={selectedTechnology}
-              onOptionSelect={onTechnologyChange}
-            />
-          ) : null}
         </div>
       </div>
     </section>
