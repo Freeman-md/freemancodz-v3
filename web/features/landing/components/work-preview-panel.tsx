@@ -8,6 +8,8 @@ export function WorkPreviewPanel({
 }: {
   featuredWork: FeaturedWorkPanel
 }) {
+  const visibleTags = featuredWork.tags.slice(0, 10)
+
   if (featuredWork.variant === "stacked") {
     return (
       <article className="flex min-h-[18rem] flex-col justify-between bg-[linear-gradient(180deg,#272042_0%,#1a1a2a_100%)] p-8">
@@ -17,7 +19,7 @@ export function WorkPreviewPanel({
               {featuredWork.eyebrow}
             </p>
             <div className="flex flex-wrap gap-2">
-              {featuredWork.tags.map((tagLabel) => (
+              {visibleTags.map((tagLabel) => (
                 <span
                   key={tagLabel}
                   className="bg-black/18 px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-white/82 uppercase"
@@ -65,7 +67,7 @@ export function WorkPreviewPanel({
               {featuredWork.eyebrow}
             </p>
             <div className="flex flex-wrap gap-2">
-              {featuredWork.tags.map((tagLabel) => (
+              {visibleTags.map((tagLabel) => (
                 <span
                   key={tagLabel}
                   className="bg-[var(--color-surface-container-highest)] px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-white/78 uppercase"
